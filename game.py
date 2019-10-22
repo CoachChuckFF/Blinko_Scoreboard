@@ -22,7 +22,7 @@ running = True
 triggered = False
 triggeredIndex = 0
 score = 0
-
+count = 0
 
 
 def text_objects(text):
@@ -31,7 +31,8 @@ def text_objects(text):
         return rendered, rendered.get_rect(center=screen.get_rect().center)
 
 pygame.init()
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+#screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((1500, 500))
 pygame.display.update()
 
 while running:
@@ -59,49 +60,26 @@ while running:
                                 score = score + SCORES[8]  
                         if event.key == pygame.K_r:
                                 score = 0
+                                triggered = False
+                                print("reset")
+                                sleep(0.89)
+
+
 
         #GPIO logic
         if triggered:
-                triggered = False
-                IOS[triggeredIndex].wait_for_release()
-                sleep(1)
+                print("triggered: " + " " + str(triggeredIndex) + " " + str(IOS[triggeredIndex].is_pressed) + " " + str(count))
+                if IOS[triggeredIndex].is_pressed:
+                    triggered = False
+                    print("Sleep")
+                    sleep(0.89)
+                    
         else:
-                if IOS[0].is_pressed(): 
-                      triggeredIndex = 0
-                      triggered = True  
-                      score = score + SCORES[0]
-                if IOS[1].is_pressed(): 
-                      triggeredIndex = 1
-                      triggered = True 
-                      score = score + SCORES[1] 
-                if IOS[2].is_pressed(): 
-                      triggeredIndex = 2
-                      triggered = True  
-                      score = score + SCORES[2]
-                if IOS[3].is_pressed(): 
-                      triggeredIndex = 3
-                      triggered = True 
-                      score = score + SCORES[3] 
-                if IOS[4].is_pressed(): 
-                      triggeredIndex = 4
-                      triggered = True  
-                      score = score + SCORES[4]
-                if IOS[5].is_pressed(): 
-                      triggeredIndex = 5
-                      triggered = True  
-                      score = score + SCORES[5]
-                if IOS[6].is_pressed(): 
-                      triggeredIndex = 6
-                      triggered = True  
-                      score = score + SCORES[6]
-                if IOS[7].is_pressed(): 
+                print("not triggered: " + str(count))
+                if not IOS[7].is_pressed: 
                       triggeredIndex = 7
-                      triggered = True  
+                      triggered = True
                       score = score + SCORES[7]
-                if IOS[8].is_pressed(): 
-                      triggeredIndex = 8
-                      triggered = True  
-                      score = score + SCORES[8] 
 
 
         # redraw logic
@@ -109,6 +87,8 @@ while running:
         screen.blit(*text_objects(str(score)))
 
         pygame.display.flip()
+        
+        count = count + 1
 
 #End
 pygame.quit()
