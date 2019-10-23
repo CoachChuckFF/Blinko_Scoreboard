@@ -16,7 +16,7 @@ from time import sleep
 import pygame, sys
 
 def text_objects(text):
-        font = pygame.font.SysFont("comicsansms", 610)
+        font = pygame.font.SysFont("comicsansms", 450)
         rendered = font.render(text, True, WHITE)
         return rendered, rendered.get_rect(center=screen.get_rect().center)
 
@@ -132,7 +132,7 @@ while running:
 
         # redraw logic
         screen.fill(GREEN)
-        screen.blit(*text_objects(str(score)))
+        screen.blit(*text_objects("$" + str(score)))
 
         pygame.display.flip()
         
