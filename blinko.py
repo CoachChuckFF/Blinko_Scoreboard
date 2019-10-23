@@ -53,6 +53,7 @@ option = input("Press Enter to continue...")
 useIos = option != "fuck"
 
 pygame.init()
+pygame.mouse.set_visible(False)
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.display.update()
 
